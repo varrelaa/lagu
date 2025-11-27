@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    h1#topTitle {
+      position: absolute;
+      top: 20px;
+      font-size: 3rem;
+      color: white;
+      text-shadow: 0 0 15px rgba(0,0,0,0.5);
+      animation: glow 2s infinite alternate;
+    }
+
+    #namePopup {
+      position: absolute;
+      background: white;
+      padding: 20px 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: fadeIn 1s;
+      z-index: 10;
+    }
+
+    #scene {
+      display: block; }
+
+    /* Confetti */
+    .confetti {
+      width: 10px;
+      height: 10px;
+      position: fixed;
+      top: -10px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0); opacity: 1; }
+      100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px yellow; }
+      100% { text-shadow: 0 0 25px orange; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -8px); }
+      100% { transform: translate(-50%, 0); }
+    }
+  .balloon {
+      width: 40px;
+      height: 55px;
+      background: red;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      bottom: -100px;
+      animation: fly 6s linear infinite;
+    }
+    .balloon::after {
+      content: "";
+      width: 2px;
+      height: 40px;
+      background: #fff;
+      position: absolute;
+      top: 55px;
+      left: 50%;
+    }
+    @keyframes fly {
+      0% { transform: translateY(0) translateX(0); opacity: 1; }
+      100% { transform: translateY(-120vh) translateX(20px); opacity: 0; }
+    }
+  .cake {
+      width: 200px;
+      height: 150px;
+      background: #ff9aa2;
+      border-radius: 10px;
+      position: relative;
+      margin-top: 80px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      animation: float 3s ease-in-out infinite;
+      cursor: pointer;
+    }
+    .layer {
+      width: 200px;
+      height: 40px;
+      background: #ff6f91;
+      position: absolute;
+      bottom: 0;
+      border-radius: 0 0 10px 10px;
+    }
+    .frosting {
+      width: 200px;
+      height: 30px;
+      background: #fff;
+      position: absolute;
+      top: 0;
+      border-radius: 10px 10px 0 0;
+    }
+    .candle {
+      width: 15px;
+      height: 50px;
+      background: #ffe066;
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 4px;
+    }
+    .flame {
+      width: 15px;
+      height: 20px;
+      background: orange;
+      border-radius: 50%;
+      position: absolute;
+      top: -65px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: flicker 0.3s infinite;
+    }
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.2); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<h1 id="topTitle">Happy Birthday! 🎉</h1>
+
+
+
+<div id="scene">
+  <h2 id="birthdayText"></h2>
+
+  <div class="cake" onclick="blowCandle()">
+    <div class="frosting"></div>
+    <div class="layer"></div>
+    <div class="candle"></div>
+    <div class="flame" id="flame"></div>
+  </div>
+</div>
+
+<script>
+  function startBirthday() {
+    const name = document.getElementById("username").value;
+    if (name.trim() === "") return alert("Nama tidak boleh kosong!");
+
+    document.getElementById("namePopup").style.display = "none";
+    document.getElementById("scene").style.display = "block";
+    document.getElementById("birthdayText").innerText = "Happy Birthday Ngoei Kimlun 🎉";
+
+    startConfetti(); spawnBalloons();
+  }
+
+  function blowCandle() {
+    document.getElementById("flame").classList.add("hidden");
+  }
+
+  function spawnBalloons() {
+      for (let i = 0; i < 10; i++) {
+        const b = document.createElement('div');
+        b.classList.add('balloon');
+        b.style.left = Math.random() * 100 + 'vw';
+        b.style.background = randomColor();
+        b.style.animationDuration = (5 + Math.random() * 5) + 's';
+        document.body.appendChild(b);
+        setTimeout(() => b.remove(), 11000);
+      }
+    }
+
+    function startConfetti() {
+    for (let i = 0; i < 80; i++) {
+      const conf = document.createElement("div");
+      conf.classList.add("confetti");
+      conf.style.left = Math.random() * 100 + "vw";
+      conf.style.background = randomColor();
+      conf.style.animationDuration = 2 + Math.random() * 3 + "s";
+      document.body.appendChild(conf);
+
+      setTimeout(() => conf.remove(), 4500);
+    }
+  }
+
+  function randomColor() {
+    const colors = ["#ff4757", "#1e90ff", "#2ed573", "#ffa502", "#eccc68", "#ff6b81", "#7bed9f"]; 
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+</script>
+
+  <audio id="birthdaySong" src="ulangtahun.mp3" autoplay loop></audio>
+</body>
+</html>
